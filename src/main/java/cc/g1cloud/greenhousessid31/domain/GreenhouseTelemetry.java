@@ -5,13 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.minidev.json.JSONObject;
 
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-
 @DynamoDBTable(tableName = "ssid31_greenhouse")
 public class GreenhouseTelemetry {
 
@@ -19,14 +17,11 @@ public class GreenhouseTelemetry {
     @DynamoDBHashKey
     private Long timestamp;
 
-    @DynamoDBAttribute(attributeName = "temperature")
-    private Double temperature;
 
-    @DynamoDBAttribute
-    private Number humidity;
 
-    @DynamoDBAttribute
-    private long upTime;
+    @DynamoDBAttribute(attributeName = "device_data")
+    private DeviceData deviceData;
+
 
 }
 
