@@ -28,6 +28,12 @@ public class GreenhouseController {
     }
 
 
+    @GetMapping("/telemetry2")
+    public PaginatedQueryList<GreenhouseTelemetry> getAll2() {
+        return greenhouseTelemetryRepository.findAll2();
+    }
+
+
 }
 
 
