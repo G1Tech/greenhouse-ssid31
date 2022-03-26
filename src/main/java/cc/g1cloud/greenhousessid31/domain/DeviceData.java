@@ -10,12 +10,12 @@ import lombok.Setter;
 @DynamoDBDocument
 public class DeviceData {
 
-@DynamoDBAttribute
+    @DynamoDBAttribute
     private double temperature;
 
-@DynamoDBAttribute
+    @DynamoDBAttribute
     private double humidity;
 
-@DynamoDBAttribute
+    @DynamoDBAttribute
     private long upTime;
 }

@@ -12,16 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class GreenhouseController {
 
-private final GreenhouseService greenhouseService;
+    private final GreenhouseService greenhouseService;
 
     @GetMapping("/telemetry/range")
     public PaginatedQueryList<GreenhouseTelemetry> findTelemetryRange(@RequestParam String deviceId, @RequestParam String from, @RequestParam String to) {
-
         return greenhouseService.findTelemetryRange(deviceId, from, to);
     }
-
-
-
 
 
 }

@@ -18,25 +18,28 @@ public class GreenhouseRepository {
     private final DynamoDBMapper dynamoDBMapper;
 
     public PaginatedQueryList<GreenhouseTelemetry> findTelemetryRange(String deviceID, String from, String to) {
-        Map<String, String> expressionAttributesNames = new HashMap<>();
-        expressionAttributesNames.put("#device_id", "device_id");
-        expressionAttributesNames.put("#timestamp","timestamp");
-
-        Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
-        expressionAttributeValues.put(":deviceIdValue", new AttributeValue().withS(deviceID));
-        expressionAttributeValues.put(":from",new AttributeValue().withN(from));
-        expressionAttributeValues.put(":to", new AttributeValue().withN(to));
-
         DynamoDBQueryExpression<GreenhouseTelemetry> dynamoDBQueryExpression = new DynamoDBQueryExpression<GreenhouseTelemetry>()
                 .withKeyConditionExpression("#device_id = :deviceIdValue and #timestamp between :from and :to")
-                .withExpressionAttributeNames(expressionAttributesNames)
-                .withExpressionAttributeValues(expressionAttributeValues)
+                .withExpressionAttributeNames(getExpressionAttributesNames())
+                .withExpressionAttributeValues(getExpressionAttributeValues(deviceID, from, to))
                 .withScanIndexForward(true);
-
         return dynamoDBMapper.query(GreenhouseTelemetry.class, dynamoDBQueryExpression);
-
     }
 
+    private Map<String, String> getExpressionAttributesNames() {
+        Map<String, String> expressionAttributesNames = new HashMap<>();
+        expressionAttributesNames.put("#device_id", "device_id");
+        expressionAttributesNames.put("#timestamp", "timestamp");
+        return expressionAttributesNames;
+    }
+
+    private Map<String, AttributeValue> getExpressionAttributeValues(String deviceID, String from, String to) {
+        Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
+        expressionAttributeValues.put(":deviceIdValue", new AttributeValue().withS(deviceID));
+        expressionAttributeValues.put(":from", new AttributeValue().withN(from));
+        expressionAttributeValues.put(":to", new AttributeValue().withN(to));
+        return expressionAttributeValues;
+    }
 
 }
 
