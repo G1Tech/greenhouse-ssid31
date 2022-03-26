@@ -1,0 +1,12 @@
+server:
+  port: 8099
+
+dynamodb:
+  service-endpoint: "dynamodb.us-east-1.amazonaws.com"
+  signing-region: "us-east-1"
+  access-key: "AKIARPA6MQFN6EGT2G6J"
+  secret-key: "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"
+
+logging:
+  level:
+    ROOT: INFO
