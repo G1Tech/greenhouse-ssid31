@@ -30,7 +30,7 @@ public class GreenhouseController {
 
     @GetMapping("/telemetry2")
     public PaginatedQueryList<GreenhouseTelemetry> getAll2() {
-        return greenhouseTelemetryRepository.findAll2();
+        return greenhouseTelemetryRepository.findAll2("espBL", "1648295439556", "1648295530161");
     }
 
 

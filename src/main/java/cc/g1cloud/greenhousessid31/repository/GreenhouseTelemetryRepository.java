@@ -32,20 +32,27 @@ public class GreenhouseTelemetryRepository {
         return dynamoDBMapper.scan(GreenhouseTelemetry.class, new DynamoDBScanExpression());
     }
 
-    public PaginatedQueryList<GreenhouseTelemetry> findAll2() {
-        log.info("start");
+    public PaginatedQueryList<GreenhouseTelemetry> findAll2(String deviceID, String from, String to) {
 
         Map<String, String> expressionAttributesNames = new HashMap<>();
         expressionAttributesNames.put("#device_id", "device_id");
+        expressionAttributesNames.put("#timestamp","timestamp");
+
+
 
         Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
-        expressionAttributeValues.put(":emailValue", new AttributeValue().withS("espBL"));
+        expressionAttributeValues.put(":deviceIdValue", new AttributeValue().withS(deviceID));
+        expressionAttributeValues.put(":from",new AttributeValue().withN(from));
+        expressionAttributeValues.put(":to", new AttributeValue().withN(to));
 
-//        return dynamoDBMapper.query(GreenhouseTelemetry.class, new DynamoDBQueryExpression<GreenhouseTelemetry>().withKeyConditionExpression(null).withLimit(10));
-        return dynamoDBMapper.query(GreenhouseTelemetry.class, new DynamoDBQueryExpression<GreenhouseTelemetry>()
-                .withKeyConditionExpression("#device_id = :emailValue")
+        DynamoDBQueryExpression<GreenhouseTelemetry> dynamoDBQueryExpression = new DynamoDBQueryExpression<GreenhouseTelemetry>()
+                .withKeyConditionExpression("#device_id = :deviceIdValue and #timestamp between :from and :to")
                 .withExpressionAttributeNames(expressionAttributesNames)
-                .withExpressionAttributeValues(expressionAttributeValues));
+                .withExpressionAttributeValues(expressionAttributeValues)
+                .withScanIndexForward(true);
+
+        return dynamoDBMapper.query(GreenhouseTelemetry.class, dynamoDBQueryExpression);
+
     }
 
 
