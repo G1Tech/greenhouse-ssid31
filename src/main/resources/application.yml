@@ -1,5 +1,5 @@
 server:
-  port: 8099
+  port: 8088
 
 dynamodb:
   service-endpoint: "dynamodb.us-east-1.amazonaws.com"

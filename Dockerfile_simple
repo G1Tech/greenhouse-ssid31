@@ -1,0 +1,6 @@
+FROM openjdk:18-alpine
+#RUN apk update  && apk upgrade
+COPY target/*.jar /usr/src/app/application.jar
+COPY src/main/resources/ /usr/src/app/resources/
+WORKDIR /usr/src/app/
+ENTRYPOINT ["java","-jar","application.jar"]
