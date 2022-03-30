@@ -17,9 +17,18 @@ public class GreenhouseRepository {
 
     private final DynamoDBMapper dynamoDBMapper;
 
+    private final HashMap<String, String> keyCondition = new HashMap<>() {
+        {
+            put("between", "#device_id = :deviceIdValue and #timestamp between :from and :to");
+            put("from", "#device_id = :deviceIdValue and #timestamp > :from");
+            put("to", "#device_id = :deviceIdValue and #timestamp < :to");
+        }
+    };
+
+
     public PaginatedQueryList<GreenhouseTelemetry> findTelemetryRange(String deviceID, String from, String to) {
         DynamoDBQueryExpression<GreenhouseTelemetry> dynamoDBQueryExpression = new DynamoDBQueryExpression<GreenhouseTelemetry>()
-                .withKeyConditionExpression("#device_id = :deviceIdValue and #timestamp between :from and :to")
+                .withKeyConditionExpression(keyCondition.get("between"))
                 .withExpressionAttributeNames(getExpressionAttributesNames())
                 .withExpressionAttributeValues(getExpressionAttributeValues(deviceID, from, to))
                 .withScanIndexForward(true);
