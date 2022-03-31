@@ -6,8 +6,10 @@ import cc.g1cloud.greenhousessid31.domain.GreenhouseTelemetry;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -22,10 +24,15 @@ public class GreenhouseTelemetryMapper {
                 .build();
     }
 
-    public TelemetryWidgetSingleDto toWidgetSingleDto(final List<GreenhouseTelemetry> telemetryDtoList) {
+    public TelemetryWidgetSingleDto toWidgetSingleDto(List<GreenhouseTelemetry> telemetryDtoList) {
         int index = telemetryDtoList.size() - 1;
         DoubleSummaryStatistics temperatureStats = new DoubleSummaryStatistics();
         DoubleSummaryStatistics humidityStats = new DoubleSummaryStatistics();
+
+        telemetryDtoList = telemetryDtoList.stream()
+                .sorted(Comparator.comparing(GreenhouseTelemetry::getTimestamp))
+                .collect(Collectors.toList());
+
         telemetryDtoList.forEach(d -> {
                     temperatureStats.accept(d.getDeviceData().getTemperature());
                     humidityStats.accept(d.getDeviceData().getHumidity());
