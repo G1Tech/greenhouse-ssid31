@@ -17,36 +17,34 @@ public class GreenhouseRepository {
 
     private final DynamoDBMapper dynamoDBMapper;
 
-    private final HashMap<String, String> keyCondition = new HashMap<>() {
-        {
-            put("between", "#device_id = :deviceIdValue and #timestamp between :from and :to");
-            put("from", "#device_id = :deviceIdValue and #timestamp > :from");
-            put("to", "#device_id = :deviceIdValue and #timestamp < :to");
-        }
-    };
-
-
     public PaginatedQueryList<GreenhouseTelemetry> findTelemetryRange(String deviceID, String from, String to) {
         DynamoDBQueryExpression<GreenhouseTelemetry> dynamoDBQueryExpression = new DynamoDBQueryExpression<GreenhouseTelemetry>()
-                .withKeyConditionExpression(keyCondition.get("between"))
-                .withExpressionAttributeNames(getExpressionAttributesNames())
+                .withKeyConditionExpression(getKeyCondition(from, to))
+                .withExpressionAttributeNames(getExpressionAttributesNames(from, to))
                 .withExpressionAttributeValues(getExpressionAttributeValues(deviceID, from, to))
                 .withScanIndexForward(true);
         return dynamoDBMapper.query(GreenhouseTelemetry.class, dynamoDBQueryExpression);
     }
 
-    private Map<String, String> getExpressionAttributesNames() {
+    private String getKeyCondition(String from, String to) {
+        if (from != null && to != null) return "#device_id = :deviceIdValue and #timestamp between :from and :to";
+        if (from != null) return "#device_id = :deviceIdValue and #timestamp > :from";
+        if (to != null) return "#device_id = :deviceIdValue and #timestamp < :to";
+        return "#device_id = :deviceIdValue";
+    }
+
+    private Map<String, String> getExpressionAttributesNames(String from, String to) {
         Map<String, String> expressionAttributesNames = new HashMap<>();
         expressionAttributesNames.put("#device_id", "device_id");
-        expressionAttributesNames.put("#timestamp", "timestamp");
+        if (from != null || to != null) expressionAttributesNames.put("#timestamp", "timestamp");
         return expressionAttributesNames;
     }
 
     private Map<String, AttributeValue> getExpressionAttributeValues(String deviceID, String from, String to) {
         Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
         expressionAttributeValues.put(":deviceIdValue", new AttributeValue().withS(deviceID));
-        expressionAttributeValues.put(":from", new AttributeValue().withN(from));
-        expressionAttributeValues.put(":to", new AttributeValue().withN(to));
+        if (from != null) expressionAttributeValues.put(":from", new AttributeValue().withN(from));
+        if (to != null) expressionAttributeValues.put(":to", new AttributeValue().withN(to));
         return expressionAttributeValues;
     }
 
