@@ -1,21 +1,47 @@
 package cc.g1cloud.greenhousessid31.mapper;
 
-import cc.g1cloud.greenhousessid31.controller.dto.GreenhouseTelemetryDtoV2;
+import cc.g1cloud.greenhousessid31.controller.dto.TelemetryDtoV2;
+import cc.g1cloud.greenhousessid31.controller.dto.TelemetryWidgetSingleDto;
 import cc.g1cloud.greenhousessid31.domain.GreenhouseTelemetry;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.DoubleSummaryStatistics;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
 public class GreenhouseTelemetryMapper {
 
-    public GreenhouseTelemetryDtoV2 toDtoV2(final GreenhouseTelemetry greenhouseTelemetry) {
-        return GreenhouseTelemetryDtoV2.builder()
+    public TelemetryDtoV2 toDtoV2(final GreenhouseTelemetry greenhouseTelemetry) {
+        return TelemetryDtoV2.builder()
                 .deviceId(greenhouseTelemetry.getDeviceId())
                 .timestamp(greenhouseTelemetry.getTimestamp())
                 .temperature(greenhouseTelemetry.getDeviceData().getTemperature())
                 .humidity(greenhouseTelemetry.getDeviceData().getHumidity())
                 .build();
     }
+
+    public TelemetryWidgetSingleDto toWidgetSingleDto(final List<GreenhouseTelemetry> telemetryDtoList) {
+        int index = telemetryDtoList.size() - 1;
+        DoubleSummaryStatistics temperatureStats = new DoubleSummaryStatistics();
+        DoubleSummaryStatistics humidityStats = new DoubleSummaryStatistics();
+        telemetryDtoList.forEach(d -> {
+                    temperatureStats.accept(d.getDeviceData().getTemperature());
+                    humidityStats.accept(d.getDeviceData().getHumidity());
+                }
+        );
+
+        return TelemetryWidgetSingleDto.builder()
+                .deviceId(telemetryDtoList.get(index).getDeviceId())
+                .timestamp(telemetryDtoList.get(index).getTimestamp())
+                .temperature(telemetryDtoList.get(index).getDeviceData().getTemperature())
+                .humidity(telemetryDtoList.get(index).getDeviceData().getHumidity())
+                .temperatureStatistics(temperatureStats)
+                .humidityStatistics(humidityStats)
+                .upTime(telemetryDtoList.get(index).getDeviceData().getUpTime())
+                .build();
+    }
+
 
 }
