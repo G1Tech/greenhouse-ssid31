@@ -1,4 +1,4 @@
-package cc.g1cloud.greenhousessid31.config;
+package cc.g1cloud.greenhousessid31.config.dynamodb;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

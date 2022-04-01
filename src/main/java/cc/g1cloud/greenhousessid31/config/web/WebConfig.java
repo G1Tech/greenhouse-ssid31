@@ -1,4 +1,4 @@
-package cc.g1cloud.greenhousessid31.config;
+package cc.g1cloud.greenhousessid31.config.web;
 
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

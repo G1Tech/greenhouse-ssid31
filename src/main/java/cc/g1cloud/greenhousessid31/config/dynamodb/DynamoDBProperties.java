@@ -1,4 +1,4 @@
-package cc.g1cloud.greenhousessid31.config;
+package cc.g1cloud.greenhousessid31.config.dynamodb;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
