@@ -1,7 +1,7 @@
 package cc.g1cloud.greenhousessid31.mapper;
 
 import cc.g1cloud.greenhousessid31.controller.dto.TelemetryDtoV2;
-import cc.g1cloud.greenhousessid31.controller.dto.TelemetryWidgetSingleDto;
+import cc.g1cloud.greenhousessid31.controller.dto.response.TelemetryWidgetSingleDto;
 import cc.g1cloud.greenhousessid31.domain.GreenhouseTelemetry;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

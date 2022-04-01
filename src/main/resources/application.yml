@@ -12,11 +12,11 @@ web:
     enabled: true
     allowed-origins:
       - "http://localhost:3000"
-
+      - "https://localhost:3000"
 
 logging:
   level:
-    ROOT: DEBUG
+    ROOT: INFO
     cc.g1cloud.greenhousessid31.controller: DEBUG
 
 

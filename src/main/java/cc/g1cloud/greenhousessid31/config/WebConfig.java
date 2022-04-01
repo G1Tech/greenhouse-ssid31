@@ -12,7 +12,6 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.Collections;
-import java.util.List;
 
 @Configuration
 @ConditionalOnProperty(prefix = "web.cors", name = "enabled", havingValue = "true")
@@ -21,9 +20,6 @@ import java.util.List;
 public class WebConfig  {
 
     //TODO: Сделать возможность включения с файла свойст.
-    //TODO: EnableConfigurationProperties, ConditionalOnProperty ??
-
-    private final WebProperties webProperties;
 
     @Bean
     public FilterRegistrationBean<CorsFilter> simpleCorsFilter(WebProperties webProperties) {

@@ -1,4 +1,4 @@
-package cc.g1cloud.greenhousessid31.controller.dto;
+package cc.g1cloud.greenhousessid31.controller.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
