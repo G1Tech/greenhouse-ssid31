@@ -10,3 +10,5 @@ dynamodb:
 logging:
   level:
     ROOT: INFO
+    cc.g1cloud.greenhousessid31.controller: DEBUG
+
