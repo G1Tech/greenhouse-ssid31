@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @Log4j2
-@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 public class GreenhouseController {

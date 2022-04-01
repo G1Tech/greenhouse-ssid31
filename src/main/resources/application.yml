@@ -7,8 +7,16 @@ dynamodb:
   access-key: "AKIARPA6MQFN6EGT2G6J"
   secret-key: "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"
 
+web:
+  cors:
+    enabled: true
+    allowed-origins:
+      - "http://localhost:3000"
+
+
 logging:
   level:
-    ROOT: INFO
+    ROOT: DEBUG
     cc.g1cloud.greenhousessid31.controller: DEBUG
+
 

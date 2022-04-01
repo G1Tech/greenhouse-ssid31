@@ -1,14 +1,17 @@
 package cc.g1cloud.greenhousessid31.config;
 
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@Configurable
+@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    //TODO: Вынести пароли в bcrypt? Посмотреть интеграцию с Cognito
 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -27,14 +30,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/telemetry/**").access("hasRole('WEB_USER')")
-                .antMatchers("/*").denyAll()
-                .anyRequest().permitAll()
+                .antMatchers("/**").access("hasRole('WEB_USER')")
+                .anyRequest().denyAll()
                 .and()
                 .httpBasic()
                 .and()
                 .csrf().disable()
-                .cors().disable()
+//                .cors().disable()
                 .formLogin().disable();
     }
 
