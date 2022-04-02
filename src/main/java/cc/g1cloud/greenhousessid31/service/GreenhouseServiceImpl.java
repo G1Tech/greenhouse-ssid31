@@ -1,5 +1,6 @@
 package cc.g1cloud.greenhousessid31.service;
 
+import cc.g1cloud.greenhousessid31.config.Metrics;
 import cc.g1cloud.greenhousessid31.controller.dto.TelemetryDtoV2;
 import cc.g1cloud.greenhousessid31.controller.dto.response.TelemetryWidgetSingleDto;
 import cc.g1cloud.greenhousessid31.domain.GreenhouseTelemetry;
@@ -20,9 +21,11 @@ public class GreenhouseServiceImpl implements GreenhouseService {
 
     private final GreenhouseRepository greenhouseRepository;
     private final GreenhouseTelemetryMapper greenhouseTelemetryMapper;
+    private final Metrics metrics;
 
     @Override
     public PaginatedQueryList<GreenhouseTelemetry> findTelemetryRange(String deviceID, String from, String to) {
+        metrics.countDBCallTelemetry(1);
         return greenhouseRepository.findTelemetryRange(deviceID, from, to);
     }
 

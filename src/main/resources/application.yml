@@ -1,6 +1,15 @@
 server:
   port: 8088
 
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+      write-date-timestamps-as-nanoseconds: false
+    deserialization:
+      read-date-timestamps-as-nanoseconds: false
+    default-property-inclusion: non_null
+
 dynamodb:
   service-endpoint: "dynamodb.us-east-1.amazonaws.com"
   signing-region: "us-east-1"
@@ -13,6 +22,14 @@ web:
     allowed-origins:
       - "http://localhost:3000"
       - "https://localhost:3000"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health, prometheus"
+  server:
+    port: 9090
 
 logging:
   level:

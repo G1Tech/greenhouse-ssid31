@@ -4,3 +4,6 @@
 - spring encodepassword password
 - .password("{bcrypt}$2a$10$JdiiMxvGECMXOfPnFFu/YeNtQxzmeNgCvv25MO4n0llMZLf78DVu6")
 - .password("{noop}XbU#M")
+
+Варианты получения метрик
+- https://prometheus.io/docs/concepts/metric_types/#gauge

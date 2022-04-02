@@ -30,8 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/**").access("hasRole('WEB_USER')")
-                .anyRequest().denyAll()
+                .antMatchers("/telemetry/**").access("hasRole('WEB_USER')")
+                .antMatchers("/v2/telemetry/**").access("hasRole('WEB_USER')")
+                .anyRequest().permitAll()
                 .and()
                 .httpBasic()
                 .and()
