@@ -1,8 +1,8 @@
 package cc.g1cloud.greenhousessid31.service;
 
 import cc.g1cloud.greenhousessid31.config.Metrics;
-import cc.g1cloud.greenhousessid31.controller.dto.TelemetryDtoV2;
-import cc.g1cloud.greenhousessid31.controller.dto.response.TelemetryWidgetSingleDto;
+import cc.g1cloud.greenhousessid31.controller.dto.response.TelemetryResponseDtoV2;
+import cc.g1cloud.greenhousessid31.controller.dto.response.TelemetryWidgetSingleResponseDto;
 import cc.g1cloud.greenhousessid31.domain.GreenhouseTelemetry;
 import cc.g1cloud.greenhousessid31.mapper.GreenhouseTelemetryMapper;
 import cc.g1cloud.greenhousessid31.repository.GreenhouseRepository;
@@ -30,13 +30,13 @@ public class GreenhouseServiceImpl implements GreenhouseService {
     }
 
     @Override
-    public List<TelemetryDtoV2> findTelemetryRangeV2(String deviceID, String from, String to) {
+    public List<TelemetryResponseDtoV2> findTelemetryRangeV2(String deviceID, String from, String to) {
         List<GreenhouseTelemetry> greenhouseTelemetryList = greenhouseRepository.findTelemetryRange(deviceID, from, to);
         return greenhouseTelemetryList.stream().map(greenhouseTelemetryMapper::toDtoV2).collect(Collectors.toList());
     }
 
     @Override
-    public TelemetryWidgetSingleDto findTelemetryWidgetSingle(String deviceID, Long range) {
+    public TelemetryWidgetSingleResponseDto findTelemetryWidgetSingle(String deviceID, Long range) {
         return greenhouseTelemetryMapper.toWidgetSingleDto(greenhouseRepository.findTelemetryRange(deviceID, Long.toString(System.currentTimeMillis() - range), Long.toString(System.currentTimeMillis())));
 
     }

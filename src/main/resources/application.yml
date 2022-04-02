@@ -31,9 +31,15 @@ management:
   server:
     port: 9090
 
+springdoc:
+  default-produces-media-type: application/json
+  writer-with-default-pretty-printer: true
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /v3/api-docs
+
 logging:
   level:
     ROOT: INFO
     cc.g1cloud.greenhousessid31.controller: DEBUG
-
-
