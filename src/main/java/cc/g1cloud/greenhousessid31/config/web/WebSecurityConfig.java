@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder
                 .inMemoryAuthentication()
                 .withUser("module-01")
-                .password("{noop}XbU#M")
+                .password("{bcrypt}$2a$10$JdiiMxvGECMXOfPnFFu/YeNtQxzmeNgCvv25MO4n0llMZLf78DVu6")
                 .roles("WEB_USER")
                 .and()
                 .withUser("admin-R1")
