@@ -1,4 +1,4 @@
-package cc.g1cloud.greenhousessid31.controller.dto;
+package cc.g1cloud.greenhousessid31.controller.dto.response;
 
 import cc.g1cloud.greenhousessid31.domain.DeviceData;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class TelemetryDto {
+public class TelemetryResponseDto {
 
     private String deviceId;
     private Long timestamp;

@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("WEB_USER")
                 .and()
                 .withUser("admin-R1")
-                .password("{noop}XbU#M'Ykav~N4:vF")
+                .password("{bcrypt}$2a$10$uE62WEn6kIvJZLntDnIWtOq0uNVYPdLRTeiDrsCyAOnCK.OLe5NUa")
                 .roles("ADMIN");
     }
 
@@ -30,8 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/**").access("hasRole('WEB_USER')")
-                .anyRequest().denyAll()
+                .antMatchers("/telemetry/**").access("hasRole('WEB_USER')")
+                .antMatchers("/v2/telemetry/**").access("hasRole('WEB_USER')")
+                .anyRequest().permitAll()
                 .and()
                 .httpBasic()
                 .and()

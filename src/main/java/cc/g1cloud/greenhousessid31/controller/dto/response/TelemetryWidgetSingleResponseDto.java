@@ -9,7 +9,7 @@ import java.util.DoubleSummaryStatistics;
 @Getter
 @Setter
 @Builder
-public class TelemetryWidgetSingleDto {
+public class TelemetryWidgetSingleResponseDto {
 
     private String deviceId;
     private Long timestamp;

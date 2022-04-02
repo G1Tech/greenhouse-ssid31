@@ -1,7 +1,7 @@
 package cc.g1cloud.greenhousessid31.mapper;
 
-import cc.g1cloud.greenhousessid31.controller.dto.TelemetryDtoV2;
-import cc.g1cloud.greenhousessid31.controller.dto.response.TelemetryWidgetSingleDto;
+import cc.g1cloud.greenhousessid31.controller.dto.response.TelemetryResponseDtoV2;
+import cc.g1cloud.greenhousessid31.controller.dto.response.TelemetryWidgetSingleResponseDto;
 import cc.g1cloud.greenhousessid31.domain.GreenhouseTelemetry;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class GreenhouseTelemetryMapper {
 
-    public TelemetryDtoV2 toDtoV2(final GreenhouseTelemetry greenhouseTelemetry) {
-        return TelemetryDtoV2.builder()
+    public TelemetryResponseDtoV2 toDtoV2(final GreenhouseTelemetry greenhouseTelemetry) {
+        return TelemetryResponseDtoV2.builder()
                 .deviceId(greenhouseTelemetry.getDeviceId())
                 .timestamp(greenhouseTelemetry.getTimestamp())
                 .temperature(greenhouseTelemetry.getDeviceData().getTemperature())
@@ -24,7 +24,7 @@ public class GreenhouseTelemetryMapper {
                 .build();
     }
 
-    public TelemetryWidgetSingleDto toWidgetSingleDto(List<GreenhouseTelemetry> telemetryDtoList) {
+    public TelemetryWidgetSingleResponseDto toWidgetSingleDto(List<GreenhouseTelemetry> telemetryDtoList) {
         int index = telemetryDtoList.size() - 1;
         DoubleSummaryStatistics temperatureStats = new DoubleSummaryStatistics();
         DoubleSummaryStatistics humidityStats = new DoubleSummaryStatistics();
@@ -39,7 +39,7 @@ public class GreenhouseTelemetryMapper {
                 }
         );
 
-        return TelemetryWidgetSingleDto.builder()
+        return TelemetryWidgetSingleResponseDto.builder()
                 .deviceId(telemetryDtoList.get(index).getDeviceId())
                 .timestamp(telemetryDtoList.get(index).getTimestamp())
                 .temperature(telemetryDtoList.get(index).getDeviceData().getTemperature())
