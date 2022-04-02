@@ -19,8 +19,6 @@ import java.util.Collections;
 @AllArgsConstructor
 public class WebConfig  {
 
-    //TODO: Сделать возможность включения с файла свойст.
-
     @Bean
     public FilterRegistrationBean<CorsFilter> simpleCorsFilter(WebProperties webProperties) {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
